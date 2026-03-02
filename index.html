@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yubing Jin — Spatial Data Scientist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #141414; --muted: #888; --light: #f8f7f4;
+      --accent: #3d6b5e; --accent2: #a8c5bc; --border: #e4e2dc; --white: #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+    /* SOCIAL BAR */
+    .social-bar { background: var(--ink); padding: 0.55rem 6%; display: flex; justify-content: flex-end; align-items: center; gap: 1.4rem; }
+    .social-bar a { color: rgba(255,255,255,0.5); text-decoration: none; display: flex; align-items: center; gap: 0.45rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    .social-bar a:hover { color: var(--accent2); }
+    .social-bar svg { width: 15px; height: 15px; fill: currentColor; flex-shrink: 0; }
+    .social-divider { width: 1px; height: 12px; background: rgba(255,255,255,0.15); }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.3rem 6%; background: rgba(255,255,255,0.94); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a { font-size: 0.73rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* HERO */
+    .hero { min-height: calc(100vh - 80px); display: grid; grid-template-columns: 1fr 1fr; }
+    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 8% 6% 8% 8%; }
+    .hero-tag { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.6rem; opacity: 0; animation: fadeUp 0.8s 0.1s forwards; }
+    .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.2rem, 5.5vw, 5.5rem); font-weight: 300; line-height: 1.05; margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 0.8s 0.25s forwards; }
+    .hero-name em { font-style: italic; color: var(--accent); }
+    .hero-subtitle { font-size: 0.88rem; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+    .hero-desc { font-size: 0.95rem; line-height: 1.95; color: #4a4a4a; max-width: 440px; margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.8s 0.55s forwards; }
+    .hero-cta { display: flex; gap: 1rem; align-items: center; opacity: 0; animation: fadeUp 0.8s 0.7s forwards; }
+    .btn-primary { padding: 0.85rem 2rem; background: var(--accent); color: var(--white); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .btn-primary:hover { background: #2d5247; transform: translateY(-2px); }
+    .btn-ghost { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+    .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+    .hero-right { background: var(--light); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 4rem 3rem; gap: 2rem; }
+    .hero-visual { width: 220px; height: 270px; background: var(--accent2); position: relative; overflow: hidden; opacity: 0; animation: fadeIn 1s 0.5s forwards; }
+    .hero-visual::before { content: 'YJ'; font-family: 'Cormorant Garamond', serif; font-size: 5rem; font-weight: 300; color: rgba(255,255,255,0.5); position: absolute; bottom: 1rem; right: 1.2rem; }
+    .hero-visual::after { content: ''; position: absolute; top: -40px; left: -40px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,0.18); }
+    .hero-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); width: 100%; max-width: 360px; opacity: 0; animation: fadeIn 1s 0.8s forwards; }
+    .stat { background: var(--white); padding: 1.2rem 0.8rem; text-align: center; }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; line-height: 1; color: var(--accent); }
+    .stat-label { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.3rem; }
+
+    /* SECTIONS */
+    section { padding: 6rem 8%; }
+    .section-header { display: flex; align-items: baseline; gap: 1.2rem; margin-bottom: 3.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1.2rem; }
+    .section-num { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 400; line-height: 1.1; }
+
+    /* ABOUT */
+    .about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 5rem; align-items: start; }
+    .about-text p { font-size: 0.95rem; line-height: 2; color: #444; margin-bottom: 1.4rem; }
+    .skill-group { margin-bottom: 1.8rem; }
+    .skill-group-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.7rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-tag { font-size: 0.72rem; padding: 0.3rem 0.75rem; border: 1px solid var(--border); color: #555; background: var(--light); }
+
+    /* EXPERIENCE */
+    .experience { background: var(--light); }
+    .timeline { position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+    .timeline-item { padding-left: 2.8rem; margin-bottom: 3.2rem; position: relative; }
+    .timeline-dot { position: absolute; left: -4px; top: 6px; width: 9px; height: 9px; border: 1px solid var(--accent); background: var(--white); border-radius: 50%; }
+    .timeline-date { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
+    .timeline-role { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400; margin-bottom: 0.15rem; }
+    .timeline-company { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.8rem; }
+    .timeline-bullets { list-style: none; }
+    .timeline-bullets li { font-size: 0.88rem; line-height: 1.85; color: #555; padding-left: 1rem; position: relative; margin-bottom: 0.3rem; }
+    .timeline-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent2); }
+
+    /* PROJECTS */
+    .projects { background: var(--white); }
+    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); }
+    .project-card { background: var(--white); padding: 2.4rem 2rem; transition: background 0.25s; }
+    .project-card:hover { background: var(--light); }
+    .project-cat { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+    .project-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; line-height: 1.3; margin-bottom: 0.5rem; }
+    .project-date { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.9rem; }
+    .project-desc { font-size: 0.85rem; color: #666; line-height: 1.85; margin-bottom: 1.2rem; }
+    .project-award { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; color: #9a7c3c; background: #fdf6e7; padding: 0.3rem 0.7rem; border: 1px solid #e8d8a8; margin-bottom: 0.4rem; line-height: 1.5; }
+
+    /* HONORS */
+    .honors { background: var(--ink); color: var(--white); }
+    .honors .section-num { color: var(--accent2); }
+    .honors .section-title { color: var(--white); }
+    .honors .section-header { border-color: rgba(255,255,255,0.1); }
+    .honors-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .honors-col-title { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent2); margin-bottom: 1.5rem; }
+    .honor-item { padding: 1.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .honor-item:last-child { border-bottom: none; }
+    .honor-year { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 0.3rem; }
+    .honor-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; color: var(--white); margin-bottom: 0.2rem; line-height: 1.4; }
+    .honor-sub { font-size: 0.78rem; color: rgba(255,255,255,0.4); line-height: 1.5; }
+
+    /* CONTACT */
+    .contact { background: var(--light); text-align: center; }
+    .contact-inner { max-width: 620px; margin: 0 auto; }
+    .contact-heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.4rem; }
+    .contact-heading em { font-style: italic; color: var(--accent); }
+    .contact-sub { font-size: 0.92rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.9; }
+    .contact-items { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+    .contact-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-decoration: none; transition: transform 0.2s; }
+    .contact-item:hover { transform: translateY(-3px); }
+    .contact-icon { width: 50px; height: 50px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; }
+    .contact-icon svg { width: 20px; height: 20px; fill: var(--white); }
+    .contact-label { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .contact-value { font-size: 0.75rem; color: var(--ink); }
+
+    /* FOOTER */
+    footer { padding: 1.8rem 8%; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    .reveal { opacity:0; transform:translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .honors-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { gap: 1.4rem; }
+      .social-bar { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SOCIAL BAR -->
+  <div class="social-bar">
+    <a href="https://www.instagram.com/" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      Instagram
+    </a>
+    <div class="social-divider"></div>
+    <a href="https://xhslink.com/m/70GHaurodnl" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6zm8 1a1 1 0 0 0-1 1v3H8a1 1 0 0 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 0 0 0-2h-3V8a1 1 0 0 0-1-1z"/></svg>
+      小红书 · 1.1万赞藏
+    </a>
+    <div class="social-divider"></div>
+    <a href="https://www.linkedin.com/in/yubing-jin-24268b373" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+      LinkedIn
+    </a>
+    <div class="social-divider"></div>
+    <a href="/cdn-cgi/l/email-protection#59202c3b30373e3330192c2a3a773c3d2c">
+      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      <span class="__cf_email__" data-cfemail="bbc2ced9d2d5dcd1d2fbcec8d895dedfce">[email&#160;protected]</span>
+    </a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-logo">Yubing Jin</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#honors">Honors</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <p class="hero-tag">Spatial Data Science · AI Product · GeoTech</p>
+      <h1 class="hero-name">Yubing<br><em>Jin</em></h1>
+      <p class="hero-subtitle">M.S. Spatial Data Science, USC &nbsp;·&nbsp; GIS B.S., Hangzhou Normal University</p>
+      <p class="hero-desc">
+        I build at the intersection of geospatial intelligence, AI infrastructure, and product strategy —
+        from satellite remote sensing pipelines to MaaS platform architecture.
+        Driven by data, shaped by systems thinking.
+      </p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-primary">Get in Touch</a>
+        <a href="#projects" class="btn-ghost">View Projects</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual"></div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Years Exp.</div></div>
+        <div class="stat"><div class="stat-num">2</div><div class="stat-label">SCI Papers</div></div>
+        <div class="stat"><div class="stat-num">2×</div><div class="stat-label">Natl. Prize</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="section-header reveal">
+      <span class="section-num">01 — About</span>
+      <h2 class="section-title">Where Maps Meet<br>Machine Intelligence</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm a spatial data scientist and AI product manager currently pursuing my M.S. at USC. My background spans geospatial analysis, data engineering, and end-to-end product delivery — with hands-on experience in both government-facing GovTech systems and enterprise AI infrastructure.</p>
+        <p>At Huaxin Consulting, I was seconded to China Telecom AI Company to co-lead the Xirang MaaS Platform, resolving 12+ critical cross-system compatibility bottlenecks and delivering key modules ahead of schedule. I also managed 4 digital government projects, maintaining a 90% client satisfaction rate.</p>
+        <p>I'm fluent in both the language of code (Python, SQL, Java) and the language of stakeholders — having pitched technical solutions to international clients in Saudi Arabia and Brazil, securing 2 cooperation agreements.</p>
+      </div>
+      <div class="reveal">
+        <div class="skill-group">
+          <div class="skill-group-label">Data & AI</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span><span class="skill-tag">SQL</span>
+            <span class="skill-tag">LSTM</span><span class="skill-tag">Predictive Modeling</span>
+            <span class="skill-tag">Data Cleaning</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Geospatial</div>
+          <div class="skill-tags">
+            <span class="skill-tag">ArcGIS Pro</span><span class="skill-tag">ENVI</span>
+            <span class="skill-tag">Remote Sensing</span><span class="skill-tag">Digital Twin</span>
+            <span class="skill-tag">Spatial Analysis</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Product</div>
+          <div class="skill-tags">
+            <span class="skill-tag">MaaS Architecture</span><span class="skill-tag">Requirement Eng.</span>
+            <span class="skill-tag">Axure</span><span class="skill-tag">Figma</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Languages</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Mandarin (Native)</span>
+            <span class="skill-tag">English · TOEFL 102</span>
+            <span class="skill-tag">GRE 326</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="experience" id="experience">
+    <div class="section-header reveal">
+      <span class="section-num">02 — Experience</span>
+      <h2 class="section-title">Career Journey</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Jan 2026 – Present</div>
+        <div class="timeline-role">M.S. Student, Spatial Data Science</div>
+        <div class="timeline-company">University of Southern California · Los Angeles, USA</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Dec 2024 – Dec 2025</div>
+        <div class="timeline-role">Product Manager / Project Manager</div>
+        <div class="timeline-company">Huaxin Consulting Co., Ltd. · Hangzhou, China</div>
+        <ul class="timeline-bullets">
+          <li>Seconded to China Telecom AI Co.; co-led Xirang MaaS Platform end-to-end, resolving 12+ critical cross-system compatibility bottlenecks.</li>
+          <li>Managed full lifecycle of 4 GovTech initiatives (Fire Safety, Emergency Resource Dispatching); achieved 90% client satisfaction rate.</li>
+          <li>Delivered 3 technical pitches in English to Saudi Arabian and Brazilian clients, securing 2 international cooperation agreements.</li>
+        </ul>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Dec 2024 – Mar 2025</div>
+        <div class="timeline-role">Data Engineering & AI Product Intern</div>
+        <div class="timeline-company">Huaxin Consulting Co., Ltd. · Hangzhou, China</div>
+        <ul class="timeline-bullets">
+          <li>Designed tokenization rules for a Government GenAI Q&A model on 2,000,000+ records; improved Precision & Recall by 12%.</li>
+          <li>Built a distributed Java crawler across 31 bidding platforms, bypassing complex anti-scraping mechanisms.</li>
+          <li>Developed Python validation scripts achieving &lt;1% amount error and 90% clause coverage.</li>
+        </ul>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Jun 2024 – Sep 2024</div>
+        <div class="timeline-role">Spatial Data Analyst (Intern)</div>
+        <div class="timeline-company">Ouhai Surveying and Mapping Institute · Wenzhou, China</div>
+        <ul class="timeline-bullets">
+          <li>Processed 100GB+ multi-source satellite remote sensing data using Python; produced 20+ visualization dashboards.</li>
+          <li>Applied Kriging Interpolation and Spatial Clustering to land value models; increased topological analysis efficiency by 30%.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="section-header reveal">
+      <span class="section-num">03 — Projects</span>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-cat">AI Infrastructure</div>
+        <div class="project-title">Telecom "Xirang" MaaS Platform</div>
+        <div class="project-date">Aug 2025 – Nov 2025</div>
+        <p class="project-desc">Co-led end-to-end adaptation between MaaS layer and AI infrastructure; managed development sprints for 8 sub-products and delivered key modules 3 days ahead of schedule.</p>
+        <span class="skill-tag">MaaS</span> <span class="skill-tag">AI Infrastructure</span> <span class="skill-tag">Sprint Management</span>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-cat">GovTech</div>
+        <div class="project-title">GovTech AI Suite — Smart Evaluation & Fire Safety Cloud</div>
+        <div class="project-date">Jul 2025 – Dec 2025</div>
+        <p class="project-desc">Translated complex government regulations into GenAI-driven evaluation logic and spatiotemporal fire hazard visualization. Designed high-fidelity Figma/Axure prototypes for 10+ stakeholders.</p>
+        <span class="skill-tag">GenAI</span> <span class="skill-tag">Figma</span> <span class="skill-tag">Spatiotemporal</span>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-cat">Eco-Remote Sensing</div>
+        <div class="project-title">Marine Eco-Remote Sensing Big Data System</div>
+        <div class="project-date">Jun 2024 – Jan 2025</div>
+        <p class="project-desc">Optimized LSTM predictive models (+10% forecasting accuracy); processed 100GB+ spatial datasets. Coordinated cross-functional delivery of all system modules.</p>
+        <div style="margin-top:1rem"><span class="project-award">🏆 National Grand Prize · 19th Challenge Cup · 1st / 7,000+ teams</span></div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-cat">Smart Systems</div>
+        <div class="project-title">Intelligent UAV Collaborative Management System</div>
+        <div class="project-date">Jul 2023 – Jun 2024</div>
+        <p class="project-desc">Led market research with 5+ users; drove cross-functional roadmap planning. Integrated ensemble algorithms and Digital Twin development to enhance system intelligence.</p>
+        <div style="margin-top:1rem"><span class="project-award">🥉 National 3rd Prize · China University Service Outsourcing Competition</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HONORS -->
+  <section class="honors" id="honors">
+    <div class="section-header reveal">
+      <span class="section-num">04 — Honors & Publications</span>
+      <h2 class="section-title">Recognition</h2>
+    </div>
+    <div class="honors-grid">
+      <div class="reveal">
+        <div class="honors-col-title">Awards & Copyrights</div>
+        <div class="honor-item">
+          <div class="honor-year">2024</div>
+          <div class="honor-title">National Grand Prize (1st Place)</div>
+          <div class="honor-sub">19th "Challenge Cup" Special Competition · Ranked 1st among 7,000+ teams</div>
+        </div>
+        <div class="honor-item">
+          <div class="honor-year">2024</div>
+          <div class="honor-title">National 3rd Prize</div>
+          <div class="honor-sub">China University Service Outsourcing Innovation & Entrepreneurship Competition · Top / 10,000+ teams</div>
+        </div>
+        <div class="honor-item">
+          <div class="honor-year">2024–2025</div>
+          <div class="honor-title">3 Software Copyrights (Lead Author)</div>
+          <div class="honor-sub">Algae Bloom Inversion V1.0 · Water Color Index Extraction V2.0 · AOD Inversion Software V1.0</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="honors-col-title">Publications</div>
+        <div class="honor-item">
+          <div class="honor-year">2024</div>
+          <div class="honor-title">Assessment of Satellite Products in Estimating Tropical Cyclone Remote Precipitation over the Yangtze River Delta Region</div>
+          <div class="honor-sub">Atmosphere · SCI Journal, IF: 2.9 · Co-author</div>
+        </div>
+        <div class="honor-item">
+          <div class="honor-year">2024</div>
+          <div class="honor-title">Multi-source Remote Sensing Monitoring Methods for Water Quality in Wetland Lake Chains</div>
+          <div class="honor-sub">Journal of Hangzhou Normal University · Co-author</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="section-header reveal" style="justify-content:center;flex-direction:column;align-items:center;gap:0.4rem;">
+        <span class="section-num">05 — Contact</span>
+      </div>
+      <h2 class="contact-heading reveal">Let's<br><em>Connect</em></h2>
+      <p class="contact-sub reveal">Open to research collaborations, internships, and conversations<br>about geospatial AI, product strategy, and anything in between.</p>
+      <div class="contact-items reveal">
+        <a href="/cdn-cgi/l/email-protection#2e575b4c47404944476e5b5d4d004b4a5b" class="contact-item">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+          <span class="contact-label">Email</span>
+          <span class="contact-value"><span class="__cf_email__" data-cfemail="41383423282f262b28013432226f242534">[email&#160;protected]</span></span>
+        </a>
+        <a href="tel:8582618053" class="contact-item">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div>
+          <span class="contact-label">Phone</span>
+          <span class="contact-value">858-261-8053</span>
+        </a>
+        <a href="https://www.linkedin.com/in/yubing-jin-24268b373" target="_blank" class="contact-item">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></div>
+          <span class="contact-label">LinkedIn</span>
+          <span class="contact-value">Yubing Jin</span>
+        </a>
+        <a href="https://www.instagram.com/" target="_blank" class="contact-item">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+          <span class="contact-label">Instagram</span>
+          <span class="contact-value">@yubing</span>
+        </a>
+        <a href="https://xhslink.com/m/70GHaurodnl" target="_blank" class="contact-item">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6zm8 1a1 1 0 0 0-1 1v3H8a1 1 0 0 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 0 0 0-2h-3V8a1 1 0 0 0-1-1z"/></svg></div>
+          <span class="contact-label">小红书</span>
+          <span class="contact-value">1.1万 赞&藏 🎉</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2025 Yubing Jin</span>
+    <span>Built with curiosity & code.</span>
+  </footer>
+
+  <script data-cfasync="false" src="/cd
